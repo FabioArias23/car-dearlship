@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param,Post} from '@nestjs/common';
 import { CarsService } from './cars.service';
 import { get } from 'http';
-import { UsePipes } from '@nestjs/common/decorators';
+import { Body, Delete, Patch, UsePipes } from '@nestjs/common/decorators';
 import { ParseIntPipe } from '@nestjs/common/pipes';
 
 @Controller('cars')
@@ -22,6 +22,21 @@ export class CarsController {
         console.log({id});
 
        
-        return this.carsService.findOneById(Number(id))
+        return this.carsService.findOneById((id))
+    }
+    @Post()
+    createCar(@Body() body: any){
+        return body;
+    }
+    @Patch(':id')
+    updateCar(@Body() body: any){
+        return body;
+    }
+    @Delete(':id')
+    deleteCar(@Param('id',ParseIntPipe) id: number){
+        return {
+            method: 'delete',
+            id
+        }
     }
 }
